@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "student-finance-tracker"
+version = "1.0.0"
+description = "A simple personal finance tracker for students"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+sft = "student_finance_tracker.cli:run"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["student_finance_tracker*"]
