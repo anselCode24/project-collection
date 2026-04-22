@@ -42,7 +42,7 @@ def _input_date(prompt: str) -> date:
 
 def cmd_add(tracker: FinanceTracker):
     print("\n  Add Transaction")
-    print("  ─────────────────")
+    print("  -----------------")
 
     type_idx = _pick("  Type", list(TransactionType))
     txn_type = list(TransactionType)[type_idx]
@@ -52,7 +52,7 @@ def cmd_add(tracker: FinanceTracker):
     category = cats[cat_idx]
 
     amount = _input_amount("  Amount: $")
-    description = input("  Description: ").strip() or "—"
+    description = input("  Description: ").strip() or "-"
     txn_date = _input_date("  Date")
 
     txn = tracker.add_transaction(txn_type, amount, category, description, txn_date)
@@ -87,7 +87,7 @@ def cmd_summary(tracker: FinanceTracker):
 
 def cmd_budget(tracker: FinanceTracker):
     print("\n  Set Monthly Budget")
-    print("  ──────────────────")
+    print("  ------------------")
     cats = Category.expense_categories()
     idx = _pick("  Category", cats, [c.value for c in cats])
     category = cats[idx]
@@ -113,13 +113,13 @@ MENU = [
 
 def run():
     tracker = FinanceTracker()
-    print("\n  ╔══════════════════════════════╗")
-    print("  ║   Student Finance Tracker    ║")
-    print("  ╚══════════════════════════════╝")
+    print("\n  ============================")
+    print("    Student Finance Tracker")
+    print("  ============================")
 
     while True:
         print("  Main Menu")
-        print("  ─────────")
+        print("  ---------")
         for i, (label, _) in enumerate(MENU, 1):
             print(f"  {i}. {label}")
 
@@ -131,7 +131,7 @@ def run():
         _, handler = MENU[int(raw) - 1]
         if handler is None:
             print("\n  Goodbye!\n")
-            sys.exit(0)
+            break
 
         try:
             handler(tracker)

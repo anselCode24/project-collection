@@ -16,22 +16,22 @@ def _bar(value: float, max_value: float, width: int = BAR_WIDTH) -> str:
     if max_value == 0:
         return " " * width
     filled = min(int((value / max_value) * width), width)
-    return "█" * filled + "░" * (width - filled)
+    return "#" * filled + "." * (width - filled)
 
 
 def print_summary(summary: dict):
     year, month = summary["year"], summary["month"]
     month_name = date(year, month, 1).strftime("%B %Y")
 
-    print(f"\n{'─' * 50}")
+    print(f"\n{'-' * 50}")
     print(f"  Financial Summary — {month_name}")
-    print(f"{'─' * 50}")
+    print(f"{'-' * 50}")
     print(f"  Income    : {_fmt(summary['income'])}")
     print(f"  Expenses  : {_fmt(summary['expenses'])}")
     net = summary["net"]
     sign = "+" if net >= 0 else ""
     print(f"  Net       : {sign}{_fmt(net)}")
-    print(f"{'─' * 50}")
+    print(f"{'-' * 50}")
 
     if summary["by_category"]:
         print("\n  Spending by Category:")
@@ -45,7 +45,7 @@ def print_summary(summary: dict):
     if summary["budget_status"]:
         print("\n  Budget Status:")
         for cat, status in summary["budget_status"].items():
-            flag = " ⚠ OVER BUDGET" if status["over_budget"] else ""
+            flag = " ** OVER BUDGET **" if status["over_budget"] else ""
             pct = (status["spent"] / status["limit"] * 100) if status["limit"] else 0
             bar = _bar(status["spent"], status["limit"])
             print(
@@ -60,9 +60,9 @@ def print_transactions(transactions: List[Transaction], limit: int = 20):
         print("\n  No transactions found.\n")
         return
 
-    print(f"\n{'─' * 70}")
+    print(f"\n{'-' * 70}")
     print(f"  {'ID':<5} {'Date':<12} {'Type':<10} {'Category':<15} {'Amount':<12} Description")
-    print(f"{'─' * 70}")
+    print(f"{'-' * 70}")
     for t in transactions[:limit]:
         sign = "+" if t.type == TransactionType.INCOME else "-"
         print(
